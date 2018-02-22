@@ -1,0 +1,3 @@
+[os.rename(f, f[:-4]+"_mask"+f[-4:]) for f in os.listdir('.') if not f.startswith('.')]
+python freeze_graph.py --input_graph=../output/graph.pb --input_checkpoint=../output/model.ckpt --output_node_names="Placeholder,div_1,Placeholder_2" --output_graph=../frozen_models/model4.pb  --input_binary=True
+[os.rename(f,"_"+f) for f in os.listdir('.')]
