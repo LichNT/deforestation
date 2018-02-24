@@ -2,8 +2,9 @@ import numpy as np
 import rasterio
 from rasterio import crs
 
+
 image_file = "/home/khoi/Desktop/docs/quangname_basemap_201707_clip_LZW.tif"
-output_file = "t7.tif"
+output_file = "../quangnam/diff.tif"
 with rasterio.open(image_file) as src:
     profile = src.profile
 
@@ -16,6 +17,8 @@ west = affine[2]
 north = affine[5]
 
 new_tranform = rasterio.transform.from_origin(west, north, xsize=affine[0], ysize=-affine[4])
+
+print(new_tranform)
 profile.update(transform=new_tranform)
 
 profile.update(dtype=rasterio.uint8, count=3, compress='lzw')
