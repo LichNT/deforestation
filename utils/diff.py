@@ -13,7 +13,7 @@ from tqdm import tqdm
 # result = Image.fromarray(diff.round().astype(np.uint8))
 # result.save("../hehe2.jpg")
 
-dirs = ["../quangnam_t7", "../quangnam_t9"]
+dirs = ["../quangnam/results1", "../quangnam/results2"]
 list_files = [os.listdir(d) for d in dirs]
 assert len(list_files[0]) == len(list_files[1])
 
@@ -24,9 +24,12 @@ for l in list_files[0]:
     before[np.isnan(before)] = 0
     after = to_rgb(after)/255.0
     after[np.isnan(after)] = 0
-    diff = to_rgb(1 - before*(1 - after))
-    diff[np.isnan(diff)] = 255
+    if np.array_equal(before, after):
+        diff = np.full_like(before, 255)
+    else:
+        diff = to_rgb(1 - before*(1 - after))
+        diff[np.isnan(diff)] = 255
     # diff[diff > 70] = 255
 
     diff = Image.fromarray(diff.round().astype(np.uint8))
-    diff.save("../quangnam_diff/{}".format(l))
+    diff.save("../quangnam/diff/{}".format(l))
